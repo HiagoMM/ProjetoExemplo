@@ -39,7 +39,9 @@ public class SalaService {
 		
 	}
 	
-	public 
+	public void deleteSala( Long id ) {
+		repository.deleteSala(id);
+	}
 	
 	
 	
