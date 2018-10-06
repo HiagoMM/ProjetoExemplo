@@ -11,7 +11,9 @@ public class Sala {
 	private Boolean disponivel;
 	
 	
-	public Sala (Integer numero){
+	public Sala (Integer numero,Short capacidade){
+		this.disponivel = true;
+		this.capacidade = capacidade;
 		this.numero = numero;
 		this.id = idDaVez;
 		idDaVez++;
