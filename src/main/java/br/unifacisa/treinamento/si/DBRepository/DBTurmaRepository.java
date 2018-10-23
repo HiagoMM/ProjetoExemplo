@@ -1,4 +1,4 @@
-package br.unifacisa.treinamento.DBRepository;
+package br.unifacisa.treinamento.si.DBRepository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

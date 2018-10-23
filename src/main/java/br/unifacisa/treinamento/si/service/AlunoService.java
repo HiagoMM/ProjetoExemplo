@@ -1,12 +1,15 @@
-package br.unifacisa.treinamento.service;
+package br.unifacisa.treinamento.si.service;
 
-import br.unifacisa.treinamento.si.Aluno;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.unifacisa.treinamento.DBRepository.DBAlunoRepository;
+
+
+import br.unifacisa.treinamento.si.DBRepository.DBAlunoRepository;
+import br.unifacisa.treinamento.si.Aluno;
 
 
 
@@ -18,12 +21,15 @@ public class AlunoService {
 	private DBAlunoRepository repository;
 	
 	
+	public List<Aluno> getAll(){
+		return repository.findAll();
+	}
 	
 	public Aluno salvaAluno(Aluno aluno) { //CREATE
-		if ( !repository.existsById(aluno.getId()) ) {
-			return repository.insert(aluno);
-		}	
-		return null;
+		
+		return repository.insert(aluno);
+		
+	
 	}
 	
 	public Optional<Aluno> procuraAluno(String id) { // READ

@@ -1,4 +1,4 @@
-package br.unifacisa.treinamento.service;
+package br.unifacisa.treinamento.si.service;
 
 
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.unifacisa.treinamento.si.Aluno;
 import br.unifacisa.treinamento.si.Turma;
-import br.unifacisa.treinamento.DBRepository.DBTurmaRepository;
+import br.unifacisa.treinamento.si.DBRepository.DBTurmaRepository;
 
 @Service
 public class TurmaService {

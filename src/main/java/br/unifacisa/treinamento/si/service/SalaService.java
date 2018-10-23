@@ -1,4 +1,4 @@
-package br.unifacisa.treinamento.service;
+package br.unifacisa.treinamento.si.service;
 
 
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.unifacisa.treinamento.DBRepository.DBSalaRepository;
+import br.unifacisa.treinamento.si.DBRepository.DBSalaRepository;
 import br.unifacisa.treinamento.si.Sala;
 
 @Service
