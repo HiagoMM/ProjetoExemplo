@@ -1,21 +1,27 @@
 package br.unifacisa.treinamento.si;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Turma {
 	
-	private static final Long PRIMEIRO_ID = 1L;
-	private static Long idDaVez = PRIMEIRO_ID; 
-	private Long id;
+	@Id
+	private String id;
 	private Sala sala;
+	@DBRef
 	private List<Aluno> alunos = new ArrayList<Aluno>();
 	private Short periodo;
 	
 	
-	public Turma() {
-		this.id = idDaVez;
-		idDaVez++;
+	public Turma(Sala sala) {
+		this.sala = sala;
 	}
 	
 	public List<Aluno> getAlunos() {
@@ -23,27 +29,7 @@ public class Turma {
 	}
 	
 	
-	
-	
-	public void addAluno(Aluno aluno) {
-		boolean existe = alunoExiste(aluno);
-		if (!existe) {
-			this.alunos.add(aluno);
-		}
-	}
-	
-	public void removerAluno(Aluno aluno) {
-		for(int i = 0 ; i<alunos.size() ; i++) {
-			if (alunos.get(i).equals(aluno)) {
-				alunos.remove(i);
-			}
-		}	
-	}
-	
-	
-	
-	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	
@@ -64,15 +50,7 @@ public class Turma {
 	}
 	
 	
-	private boolean alunoExiste(Aluno aluno) {
-		boolean existe = false;
-		for (int i = 0; i < alunos.size(); i++) {
-			if (alunos.get(i).equals(aluno)) {
-				existe = true;
-			}
-		}
-		return existe;
-	}
+	
 	
 	public String toString() {
 		String nomes = "";

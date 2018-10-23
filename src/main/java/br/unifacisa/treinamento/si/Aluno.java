@@ -1,27 +1,37 @@
 package br.unifacisa.treinamento.si;
 
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+
+@Document
 public class Aluno {
 	
-	private static final Long PRIMEIRO_ID = 1L;
-	private static Long idDaVez = PRIMEIRO_ID; 
-	private Long id;
+	@Id
+	private String id;
 	private String nome;
-	private Matricula matricula = new Matricula() ;
+	private String matricula;
 	private String curso;
 	
 	public String toString() {
 		return this.nome;
 	}
-	
-	public Aluno(String nome,String curso)
-	{	this.nome = nome;
-		this.curso = curso;
-		this.id = idDaVez;
-	
-		idDaVez++;
+
+	public Aluno() 
+	{	
+		this.matricula = Matricula.getMatriculaDaVez();
+		
 	}
 	
-	public Matricula getMatricula() {
+	public Aluno(String name,String curso)
+	{	this.nome = name;
+		this.curso = curso;
+		this.matricula = Matricula.getMatriculaDaVez();
+	}
+	
+	public String getMatricula() {
 		return matricula;
 	}
 
@@ -36,7 +46,7 @@ public class Aluno {
 	}
 
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	

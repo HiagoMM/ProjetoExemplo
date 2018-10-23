@@ -1,66 +1,66 @@
 package br.unifacisa.treinamento.service;
 
-import java.util.List;
-import br.unifacisa.treinamento.repository.SalaRepository;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.unifacisa.treinamento.DBRepository.DBSalaRepository;
 import br.unifacisa.treinamento.si.Sala;
 
+@Service
 public class SalaService {
 	
+	@Autowired
+	DBSalaRepository repository;
 	
-	SalaRepository repository = new SalaRepository();
-	List<Sala> salas = repository.lerTudo();
 	
 	public Sala addSala(Sala salaNova) {  // CREATE
-		if ( !salaExiste(salaNova.getId()) ) {
-			for (Sala sala : salas) {
-				if ( sala.getNumero().equals(salaNova.getNumero()) ) {
-					return null;
-				}
+		if ( !repository.existsById( salaNova.getId() ) ) {
+			if (!repository.existsBynumero(salaNova.getNumero())){
+				return repository.insert(salaNova);
 			}
 		}
-		repository.addSala(salaNova);
-		return salaNova;
-		
+		return null;
 	}
 	
 	
-	public Sala getSala(Long id) { //READ
-		return repository.getSala(id);
+	public Optional<Sala> getSala(String id) { //READ
+		return repository.findById(id);
 	}
 	
 	
 	public Sala atualizaSala(Sala salaAtualizada) { // UPDATE
 		
-		if ( salaExiste(salaAtualizada.getId()) ) {
-			repository.atualizaSala(salaAtualizada);
+		if ( repository.existsById( salaAtualizada.getId()) ) {
+			repository.save(salaAtualizada);
 			return salaAtualizada;
 		}
 		return null;
 		
 	}
 	
-	public void deleteSala( Long id ) {
-		repository.deleteSala(id);
+	public Boolean atualizaDisponibilidade(Boolean bolean,String id) { // UPDATE
+		if ( repository.existsById(id) ) {
+			Optional<Sala> sala = repository.findById(id);
+			sala.get().setDisponivel(bolean);
+			return true;
+		}
+		return false;
 	}
-	
+	public Boolean deleteSala( String id ) {
+		if ( repository.existsById(id)) {
+			repository.deleteById(id);
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 	
 	
 
-	
-	
-	
-	
-	
-	
-	private boolean salaExiste(Long id ) {
-		boolean existe = false;
-		for (int i = 0; i < salas.size(); i++) {
-			if (salas.get(i).getId().equals(id) ) {
-				existe = true;
-			}
-		}
-		return existe;
-	}
 }
 	
 	

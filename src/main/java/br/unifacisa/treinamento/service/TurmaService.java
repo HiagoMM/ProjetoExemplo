@@ -2,15 +2,20 @@ package br.unifacisa.treinamento.service;
 
 
 import java.util.List;
-
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import br.unifacisa.treinamento.si.Aluno;
 import br.unifacisa.treinamento.si.Turma;
-import br.unifacisa.treinamento.repository.TurmaRepository;
+import br.unifacisa.treinamento.DBRepository.DBTurmaRepository;
 
+@Service
 public class TurmaService {
-
-	TurmaRepository repository = new TurmaRepository();
-	List<Turma> turmas = repository.lerTudo();
+	
+	
+	@Autowired
+	DBTurmaRepository repository ;
+	
 	
 	
 	private boolean checkDisponivel(Turma turma) {
@@ -36,42 +41,43 @@ public class TurmaService {
 		return null;
 	}
 	
-	
-	
-	public Turma deleteTurma( Long id ) {            //DELETE
-		for (int i = 0; i < turmas.size() ; i++) {
-			if ( turmas.get(i).getId().equals(id) ) {
-				Turma turma = turmas.get(i);
-				turmas.remove(i);
-				return turma ;
+	public Boolean DeleteAlunoNaTurma(Aluno aluno,Turma turma) {
+		if ( repository.existsById( turma.getId() ) ) {
+			for(int i = 0;i < turma.getAlunos().size(); i++) {
+				if (turma.getAlunos().get(i).equals(aluno)) {
+					turma.getAlunos().remove(i);
+					return true;
+				}
 			}
 		}
-		return null;
+		return false;
+	}
+	
+	public List<Aluno> getTodosOsAlunos (Turma turma ){
+		if (repository.existsById(turma.getId())) {
+			return turma.getAlunos();
+		}return null;
+	}
+
+	public Boolean deleteTurma( String id ) {            //DELETE
+		if (repository.existsById(id)) {
+			repository.deleteById(id);
+			return true;
+		}
+		return false;
 	}
 
 
 	public Turma addTurma(Turma turma) { //CREATE
 		if (  checkDisponivel(turma) )  {
-			repository.salvaTurma(turma);
+			repository.insert(turma);
 			return turma;
 		}
 		return null;
 	}
 	
-	public Turma procuraTurma(Long id){ // READ
-		for (Turma turma : turmas) {
-			if(turma.getId().equals(id)) {
-				return turma;
-			}
-		}
-		return null;
-	
-		
+	public Optional<Turma> procuraTurma(String id){ // READ
+		return repository.findById(id);	
 	}
-	
-	
-
-	
-	
 
 }

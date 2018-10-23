@@ -1,56 +1,65 @@
 package br.unifacisa.treinamento.service;
 
 import br.unifacisa.treinamento.si.Aluno;
-import java.util.List;
-import br.unifacisa.treinamento.repository.AlunoRepository;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.unifacisa.treinamento.DBRepository.DBAlunoRepository;
+
+
+
+@Service
 public class AlunoService {
 	
-	AlunoRepository repository = new AlunoRepository();
-	List<Aluno> alunos = lerTudo();
 	
-	public List<Aluno> lerTudo(){
-		return repository.lerTudo();
-	}
+	@Autowired
+	private DBAlunoRepository repository;
 	
 	
 	
-	
-	public void salvaAluno(Aluno aluno) { //CREATE
-		if ( !alunoExiste(aluno.getId()) ) {
-			repository.salvaAluno(aluno);
+	public Aluno salvaAluno(Aluno aluno) { //CREATE
+		if ( !repository.existsById(aluno.getId()) ) {
+			return repository.insert(aluno);
 		}	
+		return null;
 	}
 	
-	public Aluno procuraAluno(Long id) { // READ
-		return repository.procuraAluno(id);
+	public Optional<Aluno> procuraAluno(String id) { // READ
+		return repository.findById(id);
 	}
 	
 	
-	public void deleteAluno(Long id) { //DELETE
-		if ( !alunoExiste(id) ) {
-			repository.deleteAluno(id);
+	public Boolean deleteAluno(String id) { //DELETE
+		if ( !repository.existsById(id) ) {
+			repository.deleteById(id);
+			return true;
+		}return false;
+	}
+	
+	public Boolean atualizaAluno(Aluno alunoModificado) { //UPDATE
+		if ( repository.existsById( alunoModificado.getId() )) {
+			repository.save(alunoModificado);
+			return true;
 		}
+		return false;
+	}	
+	
+	public Boolean atualizaCursoAluno ( String id, String curso) {
+		if( repository.existsById(id) ) {
+			Optional<Aluno> aluno = procuraAluno(id);
+			aluno.get().setCurso(curso);
+			return true;
+		}return false;
 	}
 	
-	public void atualizaAluno(Aluno alunoModificado) { //UPDATE
-		if ( alunoExiste(alunoModificado.getId()) ) {
-			repository.atualizaAluno(alunoModificado);
-		}
+	public Boolean atualizaNomeAluno ( String id, String nome) {
+		if( repository.existsById(id) ) {
+			Optional<Aluno> aluno = procuraAluno(id);
+			aluno.get().setNome(nome);
+			return true;
+		}return false;
 	}
-	
-	
-	
-	
-	
-	
-	private boolean alunoExiste(Long id ) {
-		boolean existe = false;
-		for (int i = 0; i < alunos.size(); i++) {
-			if (alunos.get(i).getId().equals(id) ) {
-				existe = true;
-			}
-		}
-		return existe;
-	}
+
 }

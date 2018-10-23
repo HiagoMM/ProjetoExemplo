@@ -1,11 +1,13 @@
 package br.unifacisa.treinamento.si;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Sala {
 	
-	
-	private static final Long PRIMEIRO_ID = 1L;
-	private static Long idDaVez = PRIMEIRO_ID; 
-	private Long id;
+	@Id
+	private String id;
 	private Short capacidade;
 	private Integer numero;
 	private Boolean disponivel;
@@ -15,8 +17,7 @@ public class Sala {
 		this.disponivel = true;
 		this.capacidade = capacidade;
 		this.numero = numero;
-		this.id = idDaVez;
-		idDaVez++;
+	
 	}
 	
 	public Short getCapacidade() {
@@ -37,7 +38,7 @@ public class Sala {
 	public void setDisponivel(Boolean disponivel) {
 		this.disponivel = disponivel;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	

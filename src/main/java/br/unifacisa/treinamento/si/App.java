@@ -1,22 +1,17 @@
 package br.unifacisa.treinamento.si;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import br.unifacisa.treinamento.service.*;
+import br.unifacisa.treinamento.si.*;
+
+@SpringBootApplication
+@EnableAutoConfiguration
 public class App {
 	public static void main(String[] args) {
-
-		Aluno aluno = new Aluno("Hiago","SI");
-		System.out.println(aluno.getMatricula());
-		System.out.println(aluno.getId());
-		Aluno aluno2 = new Aluno("Marcrids","Biologia");
-		System.out.println(aluno2.getMatricula() );
-		System.out.println(aluno2.getId());
-		
-		Turma turma = new Turma();
-		turma.addAluno(aluno2);
-		turma.addAluno(aluno);
-		
-		System.out.println(turma);
-		turma.removerAluno(aluno2);
-		System.out.println(turma);
-
+		SpringApplication.run(App.class, args);
 	}
 }

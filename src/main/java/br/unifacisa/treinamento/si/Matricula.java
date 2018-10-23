@@ -10,12 +10,11 @@ public class Matricula {
 	private static final Long QUANTIDADE_DE_DIGITOS = 7L;
 	private static Long numeroDaVez = PRIMEIRO_NUMERO ;
 	
-	
-	public String toString() {
-		return getMatriculaDaVez();
+	public Matricula() {
+		
 	}
 	
-	private static String getMatriculaDaVez() {
+	public static String getMatriculaDaVez() {
 		
 		
 		Calendar calendario = Calendar.getInstance();
@@ -32,10 +31,9 @@ public class Matricula {
 		return matricula;
 		
 	}
+	
+	
 	private static void atualizaNumeroDaVez() {
 		numeroDaVez++;
 	}
-	
-	
-	
 }
